@@ -1,0 +1,17 @@
+{
+  "name": "Test Automation Clinic",
+  "onlineStatus": "Active",
+  "anicomCode": "anicomCode",
+  "ipetCode": "iPetCode",
+  "reportLang": "English",
+  "pincode": "110098",
+  "country": "India",
+  "state": "New Delhi",
+  "city": "Delhi",
+  "address": "My Address",
+  "phone": "9719965480",
+  "company": "Aalda",
+  "businessLink": "https://uatcash2.vet360.jp/clinic/add",
+  "mondayFrom": "09:30 AM",
+  "mondayTo": "09:30 PM"
+}
