@@ -16,7 +16,7 @@ describe('Doctor daily schedule', () => {
     doctorPage.saveClinicAvailability()
   })
 
-  it.only('sets daily availability between start and till date', () => {
+  it('sets daily availability between start and till date', () => {
    // doctorPage.filterByClinic('INC Clinic')
    doctorPage.clickViewDoctor('User Doctor')
 

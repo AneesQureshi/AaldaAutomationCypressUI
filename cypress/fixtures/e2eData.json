@@ -1,0 +1,49 @@
+{
+  "clinic": {
+    "name": "E2E Clinic",
+    "onlineStatus": "Active",
+    "anicomCode": "A100",
+    "ipetCode": "I100",
+    "reportLang": "English",
+    "pincode": "110001",
+    "country": "India",
+    "state": "Delhi",
+    "city": "Delhi",
+    "address": "Street 1",
+    "phonePrefix": "98765",
+    "phonePrefixJapan": "9876",
+    "company": "ACME",
+    "businessLink": "https://acme.example",
+    "mondayFrom": "09:30 AM",
+    "mondayTo": "09:30 PM"
+  },
+
+  "role": {
+    "roleName": "E2E DoctorRole",
+    "workAsDoctor": true,
+    "parentPrivileges": ["view_queue"],
+    "childPrivileges": ["create_appointment"]
+  },
+
+  "doctor": {
+    "firstName": "E2E",
+    "lastName": "Doctor",
+    "kanaLastName": "カナ",
+    "kanaFirstName": "カナ",
+    "password": "Test@1234"
+  },
+
+  "service": {
+    "name": "E2E Service",
+    "categories": ["診察"],
+    "duration": "30",
+    "online": true,
+    "description": "E2E service created by UI",
+    "active": true
+  },
+
+  "appointment": {
+    "clientName": "Sandeep",
+    "notes": "E2E appointment created by UI"
+  }
+}

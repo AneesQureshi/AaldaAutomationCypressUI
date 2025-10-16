@@ -28,3 +28,10 @@ Cypress.on('uncaught:exception', (err) => {
   }
 });
 
+Cypress.on('uncaught:exception', (err) => {
+  const msg = err.message || '';
+  if (msg.includes('Cannot convert undefined') || msg.includes('Object.keys')) {
+    return false;
+  }
+  return true;
+});

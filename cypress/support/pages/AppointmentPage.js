@@ -36,6 +36,15 @@ class Appointment {
     })
   }
 
+selectClinicByName(name) {
+  if (!name) throw new Error('name is required')
+
+  cy.get(this.selectors.clinicSelect)
+    .should('exist')
+    .select(name)
+}
+
+
   selectFirstService() {
     cy.get(this.selectors.serviceSelect).should('exist').then($sel => {
       cy.wrap($sel)
@@ -49,6 +58,15 @@ class Appointment {
     })
   }
 
+  selectServiceByName(name) {
+  if (!name) throw new Error('name is required')
+
+  cy.get(this.selectors.serviceSelect)
+    .should('exist')
+    .select(name)
+}
+
+
   selectDoctor() {
     cy.get(this.selectors.doctorSelect).should('exist').then($sel => {
       cy.wrap($sel)
@@ -61,6 +79,13 @@ class Appointment {
         })
     })
   }
+selectDoctorByName(name) {
+  if (!name) throw new Error('name is required')
+
+  cy.get(this.selectors.doctorSelect)
+    .should('exist')
+    .select(name)
+}
 
   selectFirstAvailableTimeSlot() {
     cy.get(this.selectors.timeSlotContainer)
@@ -133,6 +158,46 @@ class Appointment {
       .should('contain.text', name)
       .and('contain.text', timeSlot)
   }
+
+  createAppointment({
+  clinic,
+  service,
+  doctor,
+  clientName = names.clientName,
+  notes = data?.appointment?.notes
+} = {}) {
+  this.visit()
+
+  if (clinic) this.selectClinicByName(clinic)
+  else this.selectClinic()
+
+  if (service) this.selectServiceByName(service)
+  else this.selectFirstService()
+
+  if (doctor) this.selectDoctorByName(doctor)
+  else this.selectDoctor()
+
+  this.pickDate()
+  this.getSelectedDate().then(d => cy.wrap(d).as('apptDate'))
+
+  cy.wait(2000) // keeps original timing behaviour
+  this.selectFirstAvailableTimeSlot()
+  this.getSelectedTimeSlot().then(t => cy.wrap(t).as('apptTime'))
+
+  this.enterClient(clientName)
+  this.getClientEmail().then(e => cy.wrap(e).as('apptEmail'))
+
+  this.selectPet()
+
+  if (notes) this.enterNotes(notes)
+
+  this.submit()
+
+  return this
 }
 
-export default Appointment
+
+
+}
+
+export default  Appointment

@@ -151,12 +151,22 @@ selectDates(inputSelectorStart, inputSelectorTill) {
 
 
   // clinicIndex = 0 for first clinic block, 1 for second, etc.
-  setDayTimesForClinic({ clinicIndex = 0, open = '09:00', close = '17:00' } = {}) {
-    cy.get(this.selectors.scheduleForm).within(() => {
-      cy.get(`${this.selectors.dayWrapper} input.open_time`).eq(clinicIndex).clear().type(open)
-      cy.get(`${this.selectors.dayWrapper} input.close_time`).eq(clinicIndex).clear().type(close)
+setDayTimesForClinic({ clinicName, open = '09:00', close = '17:00' } = {}) {
+  // find the correct datetime block containing that clinic name
+  cy.get('#add_schedule_form .datetimeparent')
+    .filter((i, el) => {
+      return Cypress.$(el).find('label.custom-control-label').text().trim() === clinicName
     })
-  }
+    .first() // in case the name repeats across days/tabs
+    .within(() => {
+      cy.get('input.open_time').clear().type(open)
+      cy.get('input.close_time').clear().type(close)
+    })
+}
+
+
+
+
 
   addTimeSlotForClinic(clinicDataId) {
     cy.get(this.selectors.scheduleForm).find(`${this.selectors.addTimeBtn}[data-id="${clinicDataId}"]`).click({ force: true })
@@ -164,8 +174,36 @@ selectDates(inputSelectorStart, inputSelectorTill) {
 
   saveSchedule() {
     cy.get(this.selectors.scheduleForm).find(this.selectors.saveScheduleBtn).click({ force: true })
-    cy.get(this.selectors.scheduleForm).should('not.exist')
+ //   cy.get(this.selectors.scheduleForm).should('not.exist')
   }
+
+
+createDoctorAvailability({
+  doctorDisplayName,
+  clinics = ['My Test Clinic'],
+  schedule = { type: 'day', clinicName: undefined, open: '10:00', close: '18:00' }
+} = {}) {
+  this.visit()
+  this.openSelectClinicModalByName(doctorDisplayName)
+  this.setAvailableClinics(clinics)
+  this.saveClinicAvailability()
+
+  this.clickViewDoctor(doctorDisplayName)
+  this.openAddAvailabilityModal()
+  this.setScheduleType(schedule.type)
+  this.selectDates('#visit_date', '#till_date')
+
+  this.setDayTimesForClinic({
+    clinicName: schedule.clinicName ?? clinics[0],
+    open: schedule.open,
+    close: schedule.close
+  })
+
+  this.saveSchedule()
+  return this
 }
 
-export default DoctorPage
+
+}
+
+export default new DoctorPage

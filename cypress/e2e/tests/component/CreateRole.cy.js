@@ -5,11 +5,11 @@ import Role from '../../../support/pages/RolePage'
 describe('Create Role', () => {
   const login = new Login()
 
-  before(() => {
-    cy.fixture('login').then((data) => {
-      // use helper that visits, logs in and selects language
-      login.loginWithCredentials(data.email, data.password, 'English')
+  beforeEach(() => {
+    cy.session('admin-session', () => {
+      cy.loginFromFixture()
     })
+    cy.visit('/queues')
   })
 
   it('should create a Doctor role with privileges', () => {

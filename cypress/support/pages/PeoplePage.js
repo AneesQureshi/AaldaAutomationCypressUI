@@ -80,6 +80,15 @@ class PeoplePage {
     if (defaultClinic) this.selectDefaultClinic(defaultClinic)
     if (userInfo) this.enterUserInfo(userInfo)
   }
+
+  createPerson({ role, clinics, defaultClinic, userInfo }) {
+  this.open()
+  this.fill({ role, clinics, defaultClinic, userInfo })
+  this.save()
+  return this
+}
+
+
 }
 
 export default new PeoplePage()

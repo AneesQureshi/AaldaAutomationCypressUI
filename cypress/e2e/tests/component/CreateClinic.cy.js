@@ -1,22 +1,12 @@
-import Login from '../../../support/pages/LoginAalda'
+
 import Clinic from '../../../support/pages/ClinicPage'
 
 describe('Create Clinic', () => {
-  const credentials = {
-    email: 'admin@aalda.in',
-    password: '12345',
-    language: 'English'
-  }
-
+  
   beforeEach(() => {
-    // create once and reuse automatically
     cy.session('admin-session', () => {
-      const login = new Login()
-      login.loginWithCredentials(credentials.email, credentials.password, credentials.language)
-      cy.url().should('include', '/queues')
+      cy.loginFromFixture()
     })
-
-    // now visit page with restored session
     cy.visit('/queues')
   })
 
