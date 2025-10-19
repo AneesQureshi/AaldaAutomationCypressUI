@@ -29,7 +29,7 @@ describe('Create Clinic', () => {
     Clinic.createClinic({
       name: 'My Test Clinic',
       onlineStatus: 'Active',
-      anicomCode: 'A100',
+      anicomCode: 'A1001',
       ipetCode: 'I100',
       reportLang: 'English',
       pincode: '110001',
