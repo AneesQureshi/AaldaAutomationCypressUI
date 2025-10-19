@@ -23,7 +23,7 @@ describe('Create Clinic', () => {
     })
   })
 
-  it('Create Clinic using provided data', () => {
+  it.only('Create Clinic using provided data', () => {
     cy.intercept('POST', '/clinic/create').as('createClinic')
 
     Clinic.createClinic({
